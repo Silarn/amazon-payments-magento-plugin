@@ -17,11 +17,14 @@ class Amazon_Payments_Model_Observer_Order
      */
     public function updateCustomerAddress(Varien_Event_Observer $observer)
     {
+        /** @var Mage_Sales_Model_Order $order */
         $order    = $observer->getEvent()->getOrder();
+        /** @var Mage_Customer_Model_Customer $customer */
         $customer = $order->getCustomer();
         $payment  = $order->getPayment();
 
         if ($customer && $customer->getId() && $payment->getMethodInstance()->getCode() == 'amazon_payments') {
+            $billingAddress = $order->getBillingAddress();
             $customerAddress = $order->getShippingAddress() ? $order->getShippingAddress() : $order->getBillingAddress();
 
             $newAddress = Mage::getModel('customer/address')
@@ -29,10 +32,26 @@ class Amazon_Payments_Model_Observer_Order
                 ->setCustomerId($customer->getId())
       			    ->setSaveInAddressBook('1');
 
+
+            // Set new default billing address
+            if (!$customer->getDefaultBilling()) {
+                $billingAddress->setIsDefaultBilling('1');
+            }
+
+            // Check for duplicate addresses
+            else {
+                foreach ($customer->getAddresses() as $address) {
+                    if ($address->getPostcode() == $billingAddress->getPostcode() && $address->getStreet() == $billingAddress->getStreet()) {
+                        break;
+                    }
+                }
+            }
+
             // Create new default shipping address
             if (!$customer->getDefaultShipping()) {
                 $newAddress->setIsDefaultShipping('1');
             }
+
             // Check for duplicate addresses
             else {
                 foreach ($customer->getAddresses() as $address) {
@@ -43,6 +62,7 @@ class Amazon_Payments_Model_Observer_Order
             }
 
             try {
+                $billingAddress->save();
                 $newAddress->save();
             } catch (Exception $e) {
                 Mage::logException($e);
