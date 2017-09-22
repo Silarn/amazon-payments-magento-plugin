@@ -1,4 +1,4 @@
-## Quick Start - Amazon Pay and Login with Amazon for Magento
+## Amazon Pay and Login with Amazon for Magento
 
 [View the Complete User Guide](https://github.com/amzn/amazon-payments-magento-plugin/wiki)
 or [Learn More about Amazon Pay](https://pay.amazon.com/sp/magento)
@@ -11,6 +11,7 @@ or [Learn More about Amazon Pay](https://pay.amazon.com/sp/magento)
 * SSL is installed on your site and active on Checkout and Login pages
 * Compilation is turned off in your Magento system
 
+**NOTE:** If you are based in the UK or EU, please check out our [Amazon Pay and Login with Amazon for Europe](https://www.magentocommerce.com/magento-connect/amazon-pay-and-login-with-amazon-for-europe.html) extension.
 
 ### Installation
 > **NOTE** Before you begin, make a backup of your Magento site.
