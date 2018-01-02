@@ -79,24 +79,6 @@ class Amazon_Payments_Model_Customer extends Mage_Customer_Model_Customer
     }
 
     /**
-     * Get Amazon Name
-     *
-     * @return array
-     */
-    public function getAmazonName($name)
-    {
-        // if the user only has a first name, handle accordingly
-        $trimmedName = trim($name);
-        if(strpos($trimmedName,' ')===false) {
-            return array($trimmedName,'.');
-        }
-
-        $firstName = substr($name, 0, strrpos($name, ' '));
-        $lastName  = substr($name, strlen($firstName) + 1);
-        return array($firstName, $lastName);
-    }
-
-    /**
      * Create a new customer
      *
      * @param array $amazonProfile
@@ -105,7 +87,7 @@ class Amazon_Payments_Model_Customer extends Mage_Customer_Model_Customer
      */
     public function createCustomer($amazonProfile)
     {
-        list($firstName, $lastName) = $this->getAmazonName($amazonProfile['name']);
+        list($firstName, $lastName) = Amazon_Payments_Helper_Data::getAmazonName($amazonProfile['name']);
 
         try {
             $this
