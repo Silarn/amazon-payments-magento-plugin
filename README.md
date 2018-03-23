@@ -17,7 +17,7 @@ or [Learn More about Amazon Pay](https://pay.amazon.com/sp/magento)
 > **NOTE** Before you begin, make a backup of your Magento site.
 
 * Using Magento Connect (Recommended):
-    * https://www.magentocommerce.com/magento-connect/pay-with-amazon-for-magento-1.html
+    * https://marketplace.magento.com/amzn-login-and-pay-for-magento.html
 * Using Manual Installation:
     * Click the Download Zip button and save to your local machine
     * Transfer the zip file to your Magento webserver
