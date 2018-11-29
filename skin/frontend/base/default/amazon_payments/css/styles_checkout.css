@@ -45,7 +45,7 @@
   margin-top:2em;
   max-width:100%;
   height: 140px;
-
+}
 .amazon-widget-wrapper {
   position:relative;
 }
@@ -185,19 +185,14 @@ body.page-popup #amazon-checkout {
 
 textarea#sandbox { width:100%;}
 
-
-/* Responsive */
-@media all and (max-width: 880px) {
-  #checkout-amazon-columns,
+@media all and (max-width: 767px) {
   #checkout-amazon-columns {
-    display:block;
+      display: block;
   }
-
-  .col-amz {
-    display:block;
-    width:auto;
-    margin-right:0;
-    padding-right:0;
-    border-right:0;
+  #col-1-amz,
+  #col-2-amz,
+  #col-3-amz {
+    width: 100%;
+    display: block;
   }
 }

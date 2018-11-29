@@ -342,10 +342,7 @@ class Amazon_Payments_Helper_Data extends Mage_Core_Helper_Abstract
      * @param OffAmazonPaymentsService_Model_Address amazonAddress
      */
     public function transformAmazonAddressToMagentoAddress($amazonAddress) {
-        $name = $amazonAddress->getName();
-        $firstName = substr($name, 0, strrpos($name, ' '));
-        $lastName  = substr($name, strlen($firstName) + 1);
-
+        list($firstName, $lastName) = self::getAmazonName($amazonAddress->getName());
         $data['firstname'] = $firstName;
         $data['lastname'] = $lastName;
         $data['country_id'] = $amazonAddress->getCountryCode();
@@ -401,4 +398,21 @@ class Amazon_Payments_Helper_Data extends Mage_Core_Helper_Abstract
       }
     }
 
+    /**
+     * Get Amazon Name
+     *
+     * @return array
+     */
+    public static function getAmazonName($name)
+    {
+        // if the user only has a first name, handle accordingly
+        $trimmedName = trim($name);
+        if(strpos($trimmedName,' ')===false) {
+            return array($trimmedName,'.');
+        }
+
+        $firstName = substr($name, 0, strrpos($name, ' '));
+        $lastName  = substr($name, strlen($firstName) + 1);
+        return array($firstName, $lastName);
+    }
 }
