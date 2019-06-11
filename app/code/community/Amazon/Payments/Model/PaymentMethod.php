@@ -370,20 +370,27 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
             }
 
             if (!$this->_getErrorCheck() || $orderReferenceDetails->getOrderReferenceStatus()->getState() == 'Draft') {
-                $apiResult = $this->_getApi()->setOrderReferenceDetails(
-                    $orderReferenceId,
-                    $order->getBaseGrandTotal(),
-                    $order->getBaseCurrencyCode(),
-                    $order->getIncrementId(),
-                    $this->_getApi()->getConfig()->getStoreName()
-                );
+                try {
+                    $apiResult = $this->_getApi()->setOrderReferenceDetails(
+                        $orderReferenceId,
+                        $order->getBaseGrandTotal(),
+                        $order->getBaseCurrencyCode(),
+                        $order->getIncrementId(),
+                        $this->_getApi()->getConfig()->getStoreName()
+                    );
+                }
+                catch (Exception $e) {
+                    Mage::throwException("There was an error processing your payment. Please reload the page and try again.");
+                    $this->_setErrorCheck();
+                    return;
+                }
             }
 
             try {
                 $apiResult = $this->_getApi()->confirmOrderReference($orderReferenceId);
             }
             catch (Exception $e) {
-                Mage::throwException("Please try another Amazon payment method." . "\n\n" . substr($e->getMessage(), 0, strpos($e->getMessage(), 'Stack trace')));
+                Mage::throwException("Please try another Amazon payment method.");
                 $this->_setErrorCheck();
                 return;
             }
