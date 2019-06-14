@@ -1388,6 +1388,12 @@ class OffAmazonPaymentsService_Client implements OffAmazonPaymentsService_Interf
         if ($request->isSetSellerId()) {
             $parameters['SellerId'] =  $request->getSellerId();
         }
+        if ($request->isSetSuccessUrl()) {
+            $parameters['SuccessUrl'] =  $request->getSuccessUrl();
+        }
+        if ($request->isSetFailureUrl()) {
+            $parameters['FailureUrl'] =  $request->getFailureUrl();
+        }
 
         return $parameters;
     }

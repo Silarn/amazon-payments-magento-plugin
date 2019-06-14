@@ -55,11 +55,79 @@ class OffAmazonPaymentsService_Model_ConfirmOrderReferenceRequest extends OffAma
         $this->_fields = array (
         'AmazonOrderReferenceId' => array('FieldValue' => null, 'FieldType' => 'string'),
         'SellerId' => array('FieldValue' => null, 'FieldType' => 'string'),
+        'SuccessUrl' => array('FieldValue' => null, 'FieldType' => 'string'),
+        'FailureUrl' => array('FieldValue' => null, 'FieldType' => 'string'),
         );
         parent::__construct($data);
     }
 
-        /**
+    /**
+     * Sets the SuccessUrl for SCA
+     *
+     * @param string URL
+     * @return this instance
+     */
+    public function setSuccessUrl($value)
+    {
+        $this->_fields['SuccessUrl']['FieldValue'] = $value;
+        return $this;
+    }
+
+    /**
+     * Get the SuccessUrl for SCA
+     *
+     * @param string URL
+     * @return this instance
+     */
+    public function getSuccessUrl($value)
+    {
+        return $this->_fields['SuccessUrl']['FieldValue'];
+    }
+
+    /**
+     * Checks if SuccessUrl is set
+     *
+     * @return bool true if SuccessUrl is set
+     */
+    public function isSetSuccessUrl()
+    {
+        return !is_null($this->_fields['SuccessUrl']['FieldValue']);
+    }
+
+    /**
+     * Sets the FailureUrl for SCA
+     *
+     * @param string URL
+     * @return this instance
+     */
+    public function setFailureUrl($value)
+    {
+        $this->_fields['FailureUrl']['FieldValue'] = $value;
+        return $this;
+    }
+
+    /**
+     * Get the FailureUrl for SCA
+     *
+     * @param string URL
+     * @return this instance
+     */
+    public function getFailureUrl($value)
+    {
+        return $this->_fields['FailureUrl']['FieldValue'];
+    }
+
+    /**
+     * Checks if FailureUrl is set
+     *
+     * @return bool true if FailureUrl is set
+     */
+    public function isSetFailureUrl()
+    {
+        return !is_null($this->_fields['FailureUrl']['FieldValue']);
+    }
+
+    /**
      * Gets the value of the AmazonOrderReferenceId property.
      * 
      * @return string AmazonOrderReferenceId
