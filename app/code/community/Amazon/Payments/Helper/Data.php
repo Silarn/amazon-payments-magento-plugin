@@ -415,4 +415,12 @@ class Amazon_Payments_Helper_Data extends Mage_Core_Helper_Abstract
         $lastName  = substr($name, strlen($firstName) + 1);
         return array($firstName, $lastName);
     }
+
+    /**
+     * Use Strong Customer Authentication (SCA)?
+     */
+    public function isSca()
+    {
+        return in_array($this->getConfig()->getRegion(), array('uk', 'de'));
+    }
 }

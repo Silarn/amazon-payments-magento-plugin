@@ -223,7 +223,11 @@ AmazonPaymentsMageCheckout.prototype = {
       }
       <?php endif; ?>
 
-      var params = {};
+      var params = {},
+          confirmationFlow,
+          request,
+          _this = this;
+
 
       if (this.agreementsForm) {
           params = this.agreementsForm.serialize(true);
@@ -244,14 +248,24 @@ AmazonPaymentsMageCheckout.prototype = {
         this.restrictPlaceOrder(true);
         this.restrictWidgets(true);
 
-        var request = new Ajax.Request(this.opts.save.url, {
+        <?php if ($this->isSca()) : // Wrap Ajax save order ?>
+        OffAmazonPayments.initConfirmationFlow('<?php echo $this->getSellerId(); ?>', this.amazonOrderReferenceId,
+            function (confirmationFlow) {
+        <?php endif; ?>
+
+        request = new Ajax.Request(this.opts.save.url, {
             method: 'post',
             parameters: params,
-            onSuccess: this.onSaveOrder.bindAsEventListener(this)
+            onSuccess: _this.onSaveOrder.bindAsEventListener(_this, confirmationFlow)
         });
+
+        <?php if ($this->isSca()) : ?>
+            }
+        );
+        <?php endif; ?>
     },
 
-    onSaveOrder: function(transport) {
+    onSaveOrder: function(transport, confirmationFlow) {
         try{
             response = eval('(' + transport.responseText + ')');
         }
@@ -261,6 +275,15 @@ AmazonPaymentsMageCheckout.prototype = {
 
         if (response.amazonLogout) {
             amazon.Login.logout();
+        }
+
+        if (confirmationFlow) { // SCA
+            if (response.success) {
+                confirmationFlow.success();
+                return;
+            } else {
+                confirmationFlow.error();
+            }
         }
 
         if (response.redirect) {

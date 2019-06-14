@@ -273,5 +273,31 @@ class Amazon_Payments_Model_Type_Checkout extends Mage_Checkout_Model_Type_Onepa
         return $this;
     }
 
+    /**
+     * SCA workflow
+     */
+    public function initConfirmationFlow($orderReferenceId)
+    {
+        $quote = $this->getQuote();
+
+        $this->_getApi()->setOrderReferenceDetails(
+            $orderReferenceId,
+            $quote->getBaseGrandTotal(),
+            $quote->getBaseCurrencyCode(),
+            $quote->getIncrementId(),
+            $this->_getApi()->getConfig()->getStoreName()
+        );
+
+        $this->_getApi()->confirmOrderReference($orderReferenceId);
+    }
+
+    /**
+     * Return Amazon API
+     */
+    protected function _getApi()
+    {
+        return Mage::getModel('amazon_payments/api');
+    }
+
 
 }

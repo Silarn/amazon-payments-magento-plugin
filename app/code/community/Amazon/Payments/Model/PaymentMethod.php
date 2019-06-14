@@ -329,6 +329,10 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
 
         $orderConfirmed = false;
 
+        if ($payment->getAdditionalInformation('is_sca')) {
+            $orderConfirmed = true;
+        }
+
         // User did not agree to billing agreement; create order reference ID from billing agreement ID
         if ($billingAgreementId && !$adminBillingAgreementId && !$payment->getAdditionalInformation('billing_agreement_consent')) {
             $orderAttributes = array(

@@ -325,7 +325,9 @@ class Amazon_Payments_Model_Api extends Varien_Object
     public function confirmOrderReference($orderReferenceId)
     {
         $request = array(
-            'AmazonOrderReferenceId' => $orderReferenceId
+            'AmazonOrderReferenceId' => $orderReferenceId,
+            'SuccessUrl' => Mage::getUrl('amazon_payments/complete/checkout', array('_secure' => true)),
+            'FailureUrl' => Mage::getUrl('amazon_payments/complete/checkout', array('_secure' => true))
         );
 
         return $this->request('confirmOrderReference', $request);

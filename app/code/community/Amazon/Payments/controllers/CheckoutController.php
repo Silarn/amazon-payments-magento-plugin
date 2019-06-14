@@ -344,17 +344,24 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
                 $additional_information['sandbox'] = $this->getRequest()->getPost('sandbox');
             }
 
-            $this->_getCheckout()->savePayment(array(
+            $payment = array(
                 'method' => $this->_methodType,
                 'additional_information' => $additional_information,
-            ));
+            );
+            Mage::getSingleton('checkout/session')->setPayment($payment);
 
-            $this->_getCheckout()->saveOrder();
-            $this->_getCheckout()->getQuote()->save();
+            if (Mage::helper('amazon_payments')->isSca()) {
+                $this->_getCheckout()->initConfirmationFlow($this->getAmazonOrderReferenceId());
+            } else {
+                $this->_getCheckout()->savePayment($payment);
+                $this->_getCheckout()->saveOrder();
+                $this->_getCheckout()->getQuote()->save();
+                $redirectUrl = Mage::getUrl('checkout/onepage/success');
+            }
 
-            $redirectUrl = Mage::getUrl('checkout/onepage/success');
             $result['success'] = true;
             $result['error']   = false;
+
         } catch (Mage_Payment_Model_Info_Exception $e) {
             $message = $e->getMessage();
             if (!empty($message)) {

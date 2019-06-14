@@ -61,4 +61,12 @@ class Amazon_Payments_Block_Checkout extends Mage_Core_Block_Template
         return Mage::getSingleton('amazon_payments/config')->isShowCoupon();
     }
 
+    /**
+     * Use Strong Customer Authentication (SCA)?
+     */
+    public function isSca()
+    {
+        return $this->helper('amazon_payments')->isSca();
+    }
+
 }
