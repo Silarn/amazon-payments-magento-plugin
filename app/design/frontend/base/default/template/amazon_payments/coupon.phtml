@@ -9,11 +9,8 @@
  */
 ?>
 
-<h2><?php echo $this->__('Discount Codes') ?></h2>
-
 <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/amazon_payments/couponPost') ?>" method="post">
     <div class="discount">
-        <h2><?php echo $this->__('Discount Codes') ?></h2>
         <div class="discount-form">
             <label for="coupon_code"><?php echo $this->__('Enter your coupon code if you have one.') ?></label>
             <input type="hidden" name="remove" id="remove-coupone" value="0" />

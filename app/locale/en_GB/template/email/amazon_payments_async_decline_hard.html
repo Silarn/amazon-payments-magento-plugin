@@ -1,4 +1,4 @@
-<!--@subject Payment Declined: Please update your payment method on {{var store.name}}! @-->
+<!--@subject Please contact us about your order @-->
 <!--@vars
 {"store url=\"\"":"Store Url",
 "var logo_url":"Email Logo Image Url",
@@ -25,10 +25,7 @@ body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;
                     <tr>
                         <td valign="top">
                             <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;"">Dear {{htmlescape var=$customer.name}},</h1>
-                            <p style="font-size:12px; line-height:16px; margin:0;">Amazon Payments could not process your payment. Please visit your order details page below and update your payment method:</p>
-                            <p style="font-size:12px; line-height:16px; margin:1.5em; margin-right:0;"><a href="{{var order_url}}">{{var order_url}}</a></p>
-
-                            <p style="font-size:12px; line-height:16px; margin:0;">If you have any questions about your account or any other matter, please feel free to contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}" style="color:#1E7EC8;">{{config path='trans_email/ident_support/email'}}</a> or by phone at {{config path='general/store_information/phone'}}.</p>
+                            <p style="font-size:12px; line-height:16px; margin:0;">Unfortunately Amazon Payments declined the payment for your order in our online shop {{var store.name}}. Please contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}" style="color:#1E7EC8;">{{config path='trans_email/ident_support/email'}}</a> or by phone at {{config path='general/store_information/phone'}}.</p>
                         </td>
                     </tr>
                     <tr>
